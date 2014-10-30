@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Tan Long', 'tanlong@staff.sina.com.cn'),
+    ('', ''),
 )
 
 MANAGERS = ADMINS
