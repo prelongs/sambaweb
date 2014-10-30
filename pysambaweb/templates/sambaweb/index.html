@@ -1,0 +1,58 @@
+{% extends "sambaweb/base.html" %}
+{% load i18n %}
+{% block content %}
+<div id="out"></div>
+
+<div class="modal-body">
+    <ul class="breadcrumb">
+        <li class="active">项目配置</li>
+    </ul>
+	<!-- List of files in the directory -->
+	<div class="well">
+	{% if sharelist %}
+    {% for count,path,groupname in sharelist  %}
+    {% if groupname in permitlist %}
+            <blockquote>
+            <div class="row-fluid show-grid">
+                <div class="span2">
+                    <a href='/list?path={{ path }}&groupname={{groupname}}'>{{ path }}</a>
+                </div>
+                <div class="span2">
+            <button type="button" class="btn btn-danger" groupname="{{ groupname }}" data-toggle="collapse" data-target="#button{{ count }}" onclick="listshareuser('{{groupname}}');">查看拥有权限用户</button>
+                </div>
+                <div class="span2">
+<a href="#myModal{{groupname}}" role="button" data-toggle="modal" class="btn">修改项目名 </a>
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="modal hide fade" id='myModal{{groupname}}' style='display:none;' data-keyboard='false'>
+                <div class="modal-header">
+                    <button aria-hidden='true' data-dismiss='modal' class='close' type='button'>x</button>
+                    <h3 id='myModalLabel'>修改项目名</h3>
+                </div>
+                <div class='modal-body'>
+                    原项目名:{{path}}<br>
+                    新项目名:<input type='input' id='newsharename{{groupname}}'>
+                    <button class='btn' onclick="renameshare('{{path}}', document.getElementById('newsharename{{groupname}}').value)">确定</button>
+                </div>
+                <div class='modal-footer'>
+                    <button data-dismiss='modal' class='btn'>关闭</button>
+                </div>
+            </div>
+
+                </div>
+
+            </div>
+            <div id="button{{count}}" class="collapse"><p id="{{groupname}}"><br> </p></div> 
+        </blockquote>
+        {% endif %}
+			{% endfor %}
+	{% else %}
+		<p>No documents.</p>
+    {% endif %}
+    <input type="input" id="sharename">  
+        <a href="" class="btn btn-primary" onclick="addshare(document.getElementById('sharename').value); return false;">创建新项目</a>
+
+	</div>
+	</div>
+	</div>
+</div>
+
+{% endblock content %}

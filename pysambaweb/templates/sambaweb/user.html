@@ -1,0 +1,27 @@
+{% extends "sambaweb/base.html" %}
+{% load i18n %}
+{% block content %}
+<div id="out"></div>
+<div class="modal-body">
+	<ul class="breadcrumb">
+	<li class="active">项目列表</li>
+	</ul>
+
+	<div class="well">
+	<!-- List of files in the directory -->
+	{% if usershare %}
+			<p>您有权限的项目:</p>
+			{% for sharename, groupname in usershare  %}
+			<blockquote>
+            <a href='/userfile?path={{ sharename }}&groupname={{groupname}}'>{{ sharename }}</a>
+			</blockquote>
+			{% endfor %}
+	{% else %}
+		<p>您暂时没有任何项目权限，如有任何疑问，请联系xxx@</p>
+    {% endif %}
+	</div>
+	</div>
+	</div>
+</div>
+
+{% endblock content %}

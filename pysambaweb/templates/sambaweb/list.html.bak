@@ -1,0 +1,32 @@
+{% extends "sambaweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div class="modal-body">
+	<!-- List of files in the directory -->
+	<div class="accordion" id="accordion">
+	<div class="accordion-group">
+	{% if filelist %}
+			{% for k,v in filelist.items  %}
+			<div class="accordion-heading">
+				<a href="#collapse{{ k }}" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed">
+					{{ v }}
+				</a>
+			</div>
+			<div class="accordion-body collapse" id="collapse{{ k }}" style="height: 0px;">
+				<div class="accordion-inner">
+					<textarea> 
+					
+					</textarea>
+					users who has permissions
+				</div>
+			</div>
+			{% endfor %}
+	{% else %}
+		<p>No documents.</p>
+	{% endif %}
+	</div>
+	</div>
+</div>
+
+{% endblock content %}

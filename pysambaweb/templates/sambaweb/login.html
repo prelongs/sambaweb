@@ -1,0 +1,28 @@
+{% extends "sambaweb/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="page-header">
+    <h3>登陆</h3>
+</div>
+<div class="offset4 span4">
+    <form id="formpasswd" action="/login" method="post" class="form-signin">{% csrf_token %}
+        <div class="form-frm">
+            <div class="control-group">
+                <label>用户名</label>
+		<input type="text" name="username" />            
+	    </div>
+            <div class="control-group">
+                <label>密码</label>
+		<input type="password" name="password" />
+            </div>
+            <span></span>
+            <input class="btn btn-inverse btn-large" type=submit name=submit value="确定" >
+        </div>
+    </form>
+    <div class="form-result">
+    </div>
+
+</div>
+
+
+{% endblock content %}

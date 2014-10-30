@@ -1,0 +1,51 @@
+{% extends "sambaweb/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="offset4 span4">
+    <form id="formpasswd" action="/" method="post" class="form-signin">{% csrf_token %}
+        <center><h4>{% trans "Change Password Module" %}</h4><hr>
+        <div class="form-frm">
+            <div class="control-group">
+                <label>旧密码</label>
+                <input type='password' name='oldpasswd' />
+            </div>
+            <div class="control-group">
+                <label>新密码</label>
+                <input type='password' name='newpasswd' />
+            </div>
+            <div class="control-group">
+                <label>重新输入新密码</label>
+                <input type='password' name='retpasswd' />
+            </div>
+            <span></span>
+            <input class="btn btn-inverse btn-large" type=submit name=submit value="确认修改" >
+        </div>
+    </form>
+    <div class="form-result">
+        {% if is_valid %}
+            {% if result %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <label>{{ message }}</label>
+                </div>
+            {% else %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <label>{{ message }}</label>
+                </div>
+            {% endif %} 
+        {% endif %}
+    <a href="#myAbout" role="button" class="btn" data-toggle="modal">
+    <i class="icon-thumbs-up"></i></a>
+    </div>
+    {% for field in form %}
+        {% if field.errors %}
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <label>{{field.label_tag }}{{field.errors }}</label>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<!-- Modal -->
+{% endblock content %}

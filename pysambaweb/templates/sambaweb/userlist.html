@@ -1,0 +1,35 @@
+{% extends "sambaweb/base.html" %}
+{% load i18n %}
+{% block content %}
+<div id="out"></div>
+<div class="modal-body">
+	<ul class="breadcrumb">
+		<li><a href="/user">项目列表</a><span class="divider"> / </span></li>
+		{% for name, groupname, path in pathlist %}
+		<li><a href="/userfile?path={{ path }}&groupname={{ groupname }}">{{ name }}</a><span class="divider"> / </span></li>
+		{% endfor %}
+	</ul>
+	<!-- List of files in the directory -->
+	<div class="well">
+			{% for n, isfile, filename, name, groupname, r, w in filelist  %}
+			{% if isfile == 0 %}
+			<blockquote>
+                <a href="/userfile?path={{ name }}&groupname={{ groupname }}">{{ filename }}</a>
+                {% if r == 1 %}
+                <sup><label class="label label-info">读</label></sup>
+                {% endif %}
+                {% if w == 1 %}
+                <sup><label class="label label-info">写</label></sup>
+                {% endif %}
+                </br>
+			{% else %}
+            <p>{{ filename }}</p>
+			{% endif %}
+			</blockquote>
+			{% endfor %}
+	</div>
+	</div>
+	</div>
+</div>
+
+{% endblock content %}

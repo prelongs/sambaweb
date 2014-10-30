@@ -1,0 +1,105 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>Samba共享服务</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    {% block css-section %}
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"> 
+    <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/noty_theme_default.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/jquery.noty.css" rel="stylesheet">
+    {% endblock css-section %}
+    {% block js-section %}
+	<script src="{{ STATIC_URL }}js/jquery-1.9.0.min.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.i18n.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.es.json"></script>
+	<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script> 
+	<script src="{{ STATIC_URL }}js/jquery.validate.min.js"></script> 
+	<script src="{{ STATIC_URL }}js/jquery.noty.js"></script> 
+	<script src="{{ STATIC_URL }}js/main.js"></script>
+	{% endblock js-section %}
+
+    {% block extra-head %}
+    
+    {% endblock extra-head %}
+</head>
+<body data-spy="scroll" data-target="#one">
+	<!-- nav start -->
+	<div class='navbar navbar-inverse navbar-fixed-top'>
+		<div class='navbar-inner'>
+			<div class='container'>
+				<a class='brand'>项目权限管理</a>
+				<ul class='nav'>
+					<li>
+						<a href=''>说明</a>
+                    </li>
+                    {% if username in admin %}
+                    {% if page %}
+					<li class="active">
+						<a  href='/share'>配置权限</a>
+                    </li>
+                    <li>
+						<a href='/user'>我的权限</a>
+                    </li>
+                        {% else %}
+                    <li>
+						<a  href='/share'>配置权限</a>
+                    </li>
+                    <li class="active">
+						<a  href='/user'>我的权限</a>
+                    </li>
+                        {% endif %}
+
+                    {% else %}
+                    <li class='active'>
+						<a href='/user'>我的权限</a>
+                    </li>
+                    {% endif %}
+					<li>
+						<a href=''>blank</a>
+					</li>
+				</ul>
+				<span class='pull-right' style="line-height:40px;height:40px;">
+					{% if username %}
+					<a style="color:#fff"> 
+						您好,
+						<i class="icon-user icon-white"></i> 
+						{{ username }}
+						<a href="/logout" style="color:#fff">注销</a>
+						&nbsp;
+					</a>
+					{% endif %}
+					<a href="#" style="color:#fff;text-decoration:none;">
+						<i class="icon-home icon-white">
+						</i>
+						<strong>回到首页</strong>
+					</a>
+				</span>
+			</div>
+		</div>
+	</div>
+	<!-- nav end -->
+<div class='container'>
+	<div class='row'>
+        {% get_current_language as LANGUAGE_CODE %}
+            <input type="hidden" value="{{ LANGUAGE_CODE }}" id="language">
+
+        {% block content %}
+    
+        {% endblock content %}
+        <p class="msg"><br></p>
+    {% if msg %}
+    <script>noty({"text": "{{ msg }}", layout:"top", type:"success",timeout:3000});</script>
+    {% endif %}
+    
+    {% if err %}
+    <script>noty({"text": "{{ err }}", layout:"top", type:"error",timeout:2000});</script>
+    {% endif %}
+
+
+    </div>
+</div>
+</body>
+</html>
