@@ -642,9 +642,9 @@ class PySamba(object):
 	Read configure files
 	'''
         if name == 'share':
-            del groupname[:]
-            del sharename[:]
-            del num[:]
+            groupname = []
+	    sharename = []
+            num = []
             with open(configfile) as f:
                 for line in f.readlines():
                     if len(line.strip().split(',')) > 1:
@@ -655,7 +655,7 @@ class PySamba(object):
             share = zip(num, sharename, groupname)
             return share
         if name == 'group':
-            del groupname[:]
+	    groupname = []
             with open(configfile) as f:
                 for line in f.readlines():
                     if len(line.strip().split(',')) > 1:

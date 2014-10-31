@@ -55,6 +55,7 @@ def login(request):
     msg = ''
     pysmb = PySamba()
     adminlist = pysmb.readConfig('admin')
+    admin = adminlist.keys()
     username = ''
     if request.method == 'POST':
         username = request.REQUEST['username'].split('@')[0]
@@ -96,7 +97,7 @@ def logout(request):
 def list(request):
     pysmb = PySamba()
     adminlist = pysmb.readConfig('admin')
-    #adminlist = superadmin
+    admin = adminlist.keys()
     page = 'list'
     username = request.session.get('username', None)
     if request.REQUEST.has_key('groupname'):
@@ -164,11 +165,13 @@ def share(request):
 
 def listusershare(request):
     msg = ''
+    pysmb = PySamba()
+    adminlist = pysmb.readConfig('admin')
+    admin = adminlist.keys()
     if request.REQUEST.has_key('msg'):
             msg = request.REQUEST['msg']
     username = request.session.get('username', None)
     if username:
-        pysmb = PySamba()
         usershare = pysmb.listUserShare(username)
         return render(request, 'sambaweb/user.html', {
             'usershare' : usershare,
@@ -181,6 +184,9 @@ def listusershare(request):
 
 def listuserfile(request):
     username = request.session.get('username', None)
+    pysmb = PySamba()
+    adminlist = pysmb.readConfig('admin')
+    admin = adminlist.keys()
     if username and request.REQUEST.has_key('path') and request.REQUEST.has_key('groupname'):
         if request.REQUEST.has_key('path'):
             path = request.REQUEST['path']
@@ -188,7 +194,6 @@ def listuserfile(request):
             groupname = request.REQUEST['groupname']
         pathlist = path.split('/')
         pathlist = [ [a, groupname, '/'.join(pathlist[:pathlist.index(a)+1])] for a in pathlist ]
-        pysmb = PySamba()
         print username
         filelist = pysmb.listUserDir(path, username, groupname)
         return render(request, 'sambaweb/userlist.html', {
